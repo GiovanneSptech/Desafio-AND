@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <label for="input_quantidade_produtos">Número de produtos comprados: </label>
+    <input type="number" id="input_quantidade_produtos"> <br>
+    <br>
+    <label for="input_valor_total">Valor total gasto: </label>
+    <input type="number" id="input_valor_total"> <br>
+
+    <br>
+    <label for="select_cliente_vip">Selecione o tipo do cliente:</label>
+    <select name="" id="select_cliente_vip">
+        <option value="Normal" selected>Cliente normal</option>
+        <option value="Vip">Cliente VIP</option>
+    </select>
+    <br><br>
+
+    <button onclick="CalcularDesconto()">Calcular valor final</button>
+
+    <div id="div_txt"></div>
+    <script>
+
+        function CalcularDesconto() {
+            quantidade_produtos = Number(input_quantidade_produtos.value);
+            valor_total = Number(input_valor_total.value);
+            cliente_vip = select_cliente_vip.value == 'Normal' ? false : true;
+            pontos = 0;
+            valor_total_inicial = valor_total;
+
+            if (quantidade_produtos != 0 && valor_total != 0 && quantidade_produtos > 0 && valor_total > 0) {
+
+                if (quantidade_produtos > 10) {
+                    if(valor_total_inicial > 1000 && cliente_vip) valor_total *= 0.85;
+                    if(valor_total_inicial > 500 || cliente_vip) valor_total *= 0.9;
+                    if(valor_total_inicial > 500) pontos += 100;
+                    
+                }
+                if(quantidade_produtos >= 6){
+                    if(valor_total_inicial >= 200 || cliente_vip) valor_total *= 0.95;
+                }
+                if(quantidade_produtos > 5 && valor_total_inicial > 200) pontos += 50;
+
+                div_txt.innerHTML = `desconto: ${ valor_total_inicial - valor_total} <br> pontos acumulados: ${pontos}`;
+            }
+            else alert('Digite valores válidos!')
+        }
+    </script>
+</body>
+
+</html>
