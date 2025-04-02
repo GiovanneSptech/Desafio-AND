@@ -29,25 +29,25 @@
 
         function CalcularDesconto() {
             quantidade_produtos = Number(input_quantidade_produtos.value);
-            valor_total = Number(input_valor_total.value);
+            valor_total_inicial = Number(input_valor_total.value);
             cliente_vip = select_cliente_vip.value == 'Normal' ? false : true;
             pontos = 0;
-            valor_total_inicial = valor_total;
+            desconto = 0;
 
-            if (quantidade_produtos != 0 && valor_total != 0 && quantidade_produtos > 0 && valor_total > 0) {
+            if (quantidade_produtos != 0 && valor_total_inicial != 0 && quantidade_produtos > 0 && valor_total_inicial > 0) {
+                if (quantidade_produtos > 5) {
+                    if (quantidade_produtos > 10 && valor_total_inicial > 1000 && cliente_vip) desconto += 15;
+                    if (quantidade_produtos > 10 && valor_total_inicial > 500 || cliente_vip) desconto += 10;
+                    if (quantidade_produtos >= 6 && quantidade_produtos <= 10 && valor_total_inicial > 200 || cliente_vip) desconto += 5;
 
-                if (quantidade_produtos > 10) {
-                    if(valor_total_inicial > 1000 && cliente_vip) valor_total *= 0.85;
-                    if(valor_total_inicial > 500 || cliente_vip) valor_total *= 0.9;
-                    if(valor_total_inicial > 500) pontos += 100;
-                    
+
+
+                    if (valor_total_inicial > 200 || cliente_vip) pontos += 50;
+                    if (quantidade_produtos > 10 && valor_total_inicial > 500) pontos += 100;
+
+
                 }
-                if(quantidade_produtos >= 6){
-                    if(valor_total_inicial >= 200 || cliente_vip) valor_total *= 0.95;
-                }
-                if(quantidade_produtos > 5 && valor_total_inicial > 200) pontos += 50;
-
-                div_txt.innerHTML = `desconto: ${ valor_total_inicial - valor_total} <br> pontos acumulados: ${pontos}`;
+                div_txt.innerHTML = `desconto: <b>${desconto}%</b> <br> pontos acumulados: <b>${pontos}</b>`;
             }
             else alert('Digite valores válidos!')
         }
